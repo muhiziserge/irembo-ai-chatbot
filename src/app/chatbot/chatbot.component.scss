@@ -1,111 +1,123 @@
-// Design tokens
-$primary: #0063cf;
-$primary-light: #0097e7;
-$yellow: #ffd602;
-$teal: #00c5cf;
-$gray-100: #f2f4f7;
-$gray-400: #d9deeb;
-$gray-500: #667085;
-$gray-600: #475467;
-$text-dark: #1d1d1d;
-$text-medium: #5c6685;
-$text-muted: #7a808d;
-$chip-bg: #c8dff7;
-$chip-border: rgba(0, 99, 207, 0.25);
-$shadow: 0 3.738px 9.344px rgba(0, 0, 0, 0.1);
-$radius-modal: 18.688px;
-$radius-bubble: 14px;
-$radius-input: 10.105px;
-$font: 'Plus Jakarta Sans', sans-serif;
+// --- Design tokens ---
+$primary:      #0063cf;
+$primary-lt:   #0097e7;
+$yellow:       #ffd602;
+$yellow-btn:   #ffda1b;
+$teal:         #00c5cf;
+$gray-100:     #f2f4f7;
+$gray-border:  #d9deeb;
+$gray-600:     #475467;
+$text-dark:    #1d1d1d;
+$text-mid:     #5c6685;
+$text-muted:   #7a808d;
+$chip-bg:      #c8dff7;
+$chip-border:  rgba(0,99,207,0.25);
+$shadow:       0 3.738px 9.344px rgba(0,0,0,0.1);
+$r-modal:      18.688px;
+$r-bubble:     14px;
+$r-input:      10.105px;
+$font:         'Plus Jakarta Sans', sans-serif;
 
-// Floating trigger button
+// ==========================================
+// Floating trigger — bottom LEFT
+// ==========================================
 .chatbot-trigger {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(269deg, $primary 0.6%, $primary-light 99.8%);
-  border: none;
+  bottom: 28px;
+  left: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  height: 54px;
+  border-radius: 32px;
+  background: linear-gradient(258deg, $primary 6.3%, $primary-lt 98.4%);
+  border: 2px solid $yellow-btn;
   cursor: pointer;
   box-shadow: $shadow;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 1000;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 99, 207, 0.3);
-  }
+  &:hover   { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,99,207,0.35); }
+  &.open    { transform: scale(0.96); }
 
-  &.open {
-    transform: scale(0.95);
-  }
-
-  .trigger-logo {
+  .trigger-icon-group {
     position: relative;
-    width: 32px;
-    height: 30px;
+    width: 24px;
+    height: 22px;
+    flex-shrink: 0;
 
     .trigger-star {
       position: absolute;
       top: 0;
       right: 0;
-      width: 8px;
-      height: 8px;
+      width: 5px;
+      height: 5px;
     }
 
-    .trigger-main {
+    .trigger-logo {
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 28px;
-      height: 26px;
+      width: 24px;
+      height: 22px;
     }
+  }
+
+  .trigger-label {
+    font-family: $font;
+    font-weight: 600;
+    font-size: 15.965px;
+    line-height: 17.561px;
+    color: #fff;
+    white-space: nowrap;
   }
 }
 
-// Modal overlay
-.chatbot-overlay {
+// ==========================================
+// Backdrop
+// ==========================================
+.chatbot-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0,0,0,0.12);
   z-index: 1001;
 }
 
-// Main modal
+// ==========================================
+// Modal — positioned above bottom-left button
+// ==========================================
 .chatbot-modal {
   position: fixed;
   bottom: 96px;
-  right: 24px;
+  left: 28px;
   width: 470px;
   max-height: 80vh;
   background: #fff;
-  border-radius: $radius-modal;
-  box-shadow: 0 3.738px 9.344px rgba(0, 0, 0, 0.1);
+  border-radius: $r-modal;
+  box-shadow: $shadow;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   z-index: 1002;
-  animation: slideUp 0.25s ease;
+  animation: slideUp 0.22s ease;
 
   @media (max-width: 520px) {
     width: calc(100vw - 16px);
-    right: 8px;
+    left: 8px;
     bottom: 80px;
     max-height: 85vh;
   }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+// ==========================================
 // Header
+// ==========================================
 .chatbot-header {
   display: flex;
   align-items: center;
@@ -113,7 +125,6 @@ $font: 'Plus Jakarta Sans', sans-serif;
   padding: 24px 30px 0;
   position: relative;
   background: #fff;
-  border-radius: $radius-modal $radius-modal 0 0;
 
   .header-brand {
     display: flex;
@@ -121,7 +132,7 @@ $font: 'Plus Jakarta Sans', sans-serif;
     gap: 15px;
   }
 
-  .header-logo {
+  .header-logo-group {
     position: relative;
     width: 46px;
     height: 42px;
@@ -132,9 +143,8 @@ $font: 'Plus Jakarta Sans', sans-serif;
       top: 0;
       right: 0;
       width: 9px;
-      height: 8px;
+      height: 9px;
     }
-
     .logo-main {
       position: absolute;
       bottom: 0;
@@ -144,11 +154,10 @@ $font: 'Plus Jakarta Sans', sans-serif;
     }
   }
 
-  .header-info {
+  .header-text {
     display: flex;
     flex-direction: column;
     gap: 7px;
-    width: 245px;
   }
 
   .header-title-row {
@@ -175,6 +184,7 @@ $font: 'Plus Jakarta Sans', sans-serif;
     padding: 2px 4px;
     border-radius: 10.534px;
     white-space: nowrap;
+    line-height: 1.4;
   }
 
   .brand-tagline {
@@ -200,24 +210,21 @@ $font: 'Plus Jakarta Sans', sans-serif;
     align-items: center;
     justify-content: center;
     transition: background 0.15s;
-
     &:hover { background: $gray-100; }
-
-    img {
-      width: 24px;
-      height: 24px;
-    }
+    img { width: 24px; height: 24px; }
   }
 }
 
 .header-divider {
   height: 1px;
-  background: $gray-400;
+  background: $gray-border;
   margin: 16px 30px 0;
   flex-shrink: 0;
 }
 
+// ==========================================
 // Chat section
+// ==========================================
 .chat-section {
   flex: 1;
   overflow-y: auto;
@@ -228,21 +235,23 @@ $font: 'Plus Jakarta Sans', sans-serif;
   gap: 24px;
   scroll-behavior: smooth;
 
-  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar       { width: 4px; }
   &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background: $gray-400; border-radius: 2px; }
+  &::-webkit-scrollbar-thumb { background: $gray-border; border-radius: 2px; }
 }
 
-// User message
-.user-message-wrapper {
+// ==========================================
+// User bubble
+// ==========================================
+.user-row {
   display: flex;
   justify-content: flex-end;
   padding: 0 30px;
 }
 
 .user-bubble {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: $radius-bubble $radius-bubble $radius-bubble 0; // tl-br-tl-br → matches Figma: rounded-bl, rounded-br, rounded-tl
+  background: rgba(0,0,0,0.05);
+  border-radius: $r-bubble $r-bubble 0 $r-bubble;
   padding: 6px 12px;
   max-width: 342px;
   font-family: $font;
@@ -252,51 +261,41 @@ $font: 'Plus Jakarta Sans', sans-serif;
   color: $text-dark;
 }
 
-// AI response
-.ai-response-wrapper {
+// ==========================================
+// AI bubble
+// ==========================================
+.ai-row {
   padding: 12px 30px;
-  border-radius: 0 $radius-bubble $radius-bubble $radius-bubble;
 }
 
 .ai-bubble {
   background: #fff;
-  border: 1px solid $gray-400;
-  border-radius: 0 $radius-bubble $radius-bubble $radius-bubble;
+  border: 1px solid $gray-border;
+  border-radius: 0 $r-bubble $r-bubble $r-bubble;
   padding: 12px;
   max-width: 410px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  &--typing {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
 }
 
-.ai-icon-group {
+.ai-icon {
   position: relative;
   width: 25px;
   height: 23px;
   flex-shrink: 0;
 
-  .ai-dot {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 5px;
-    height: 5px;
-  }
-
-  .ai-circle {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 25px;
-    height: 23px;
-  }
+  .ai-dot    { position: absolute; top: 0; right: 0; width: 5px; height: 5px; }
+  .ai-circle { position: absolute; bottom: 0; left: 0; width: 25px; height: 23px; }
 }
 
-.ai-content {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.ai-body { display: flex; flex-direction: column; gap: 10px; }
 
 .ai-text {
   font-family: $font;
@@ -306,22 +305,13 @@ $font: 'Plus Jakarta Sans', sans-serif;
   color: $text-dark;
   margin: 0;
   white-space: pre-wrap;
-
   strong { font-weight: 700; }
 }
 
-// Welcome bubble (no border for inner content)
-.welcome-bubble {
-  border: 1px solid $gray-400;
-  border-radius: 0 $radius-bubble $radius-bubble $radius-bubble;
-  gap: 12px;
-}
-
-.welcome-content {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+// ==========================================
+// Welcome state
+// ==========================================
+.welcome-body { display: flex; flex-direction: column; gap: 12px; }
 
 .welcome-greeting {
   font-family: $font;
@@ -329,8 +319,6 @@ $font: 'Plus Jakarta Sans', sans-serif;
   line-height: 22px;
   color: $text-dark;
   margin: 0;
-
-  .greeting-emoji { font-size: 16px; }
   strong { font-weight: 700; }
 }
 
@@ -343,33 +331,28 @@ $font: 'Plus Jakarta Sans', sans-serif;
   margin: 0;
 }
 
-.suggestions-list {
+.suggestions-col {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-right: 30px;
+  padding-right: 24px;
 }
 
-.suggestion-chip {
+.suggestion-pill {
   display: inline-flex;
-  align-items: flex-start;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0 $radius-bubble $radius-bubble 0; // tl: 0, tr: 14, br: 14, bl: 0 → matches Figma rounded-bl/br/tl
+  align-self: flex-start;
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0 $r-bubble $r-bubble $r-bubble;
   padding: 6px 12px;
   font-family: $font;
   font-weight: 600;
   font-size: 14px;
   color: $text-dark;
   cursor: pointer;
-  white-space: nowrap;
-  align-self: flex-start;
+  text-align: left;
   transition: background 0.15s, border-color 0.15s;
-
-  &:hover {
-    background: rgba(0, 99, 207, 0.08);
-    border-color: rgba(0, 99, 207, 0.2);
-  }
+  &:hover { background: rgba(0,99,207,0.07); border-color: rgba(0,99,207,0.2); }
 }
 
 .welcome-hint {
@@ -379,11 +362,13 @@ $font: 'Plus Jakarta Sans', sans-serif;
   line-height: 18.688px;
   color: $text-muted;
   margin: 0;
-  padding: 6px 0;
+  padding: 4px 0;
 }
 
+// ==========================================
 // Quick reply chips
-.quick-replies {
+// ==========================================
+.quick-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -391,9 +376,6 @@ $font: 'Plus Jakarta Sans', sans-serif;
 }
 
 .reply-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   background: $chip-bg;
   border: 1px solid $chip-border;
   border-radius: 999px;
@@ -406,14 +388,146 @@ $font: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s;
-
   &:hover { background: #b3d3f5; }
 }
 
+// ==========================================
+// Parsed pills
+// ==========================================
+.parsed-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.parsed-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid rgba(0,99,207,0.35);
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-family: $font;
+  font-size: 12px;
+  white-space: nowrap;
+
+  .pill-emoji { font-size: 12px; }
+  .pill-label { font-weight: 600; color: $primary; }
+}
+
+// ==========================================
+// Slot list
+// ==========================================
+.slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slot-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  overflow: hidden;
+
+  .slot-radio {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .slot-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow: hidden;
+
+    .slot-date {
+      font-family: $font;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      color: $text-dark;
+      white-space: nowrap;
+    }
+    .slot-loc {
+      font-family: $font;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 14px;
+      color: $gray-600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .slot-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+
+    .slot-time {
+      font-family: $font;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 14px;
+      color: $gray-600;
+      white-space: nowrap;
+    }
+  }
+}
+
+.seat-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  font-family: $font;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 12px;
+  color: #fff;
+
+  &--orange { background: #f69f32; }
+  &--blue   { background: $primary; }
+  &--green  { background: #32ad75; }
+}
+
+.book-btn {
+  width: 100%;
+  background: $primary;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: $font;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 4px;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.88; }
+}
+
+// ==========================================
 // Resources panel
+// ==========================================
 .resources-panel {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 5px;
   overflow: hidden;
 }
@@ -422,13 +536,13 @@ $font: 'Plus Jakarta Sans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   width: 100%;
   padding: 12px;
   background: none;
   border: none;
   cursor: pointer;
   text-align: left;
-  gap: 10px;
 
   span {
     font-family: $font;
@@ -439,15 +553,10 @@ $font: 'Plus Jakarta Sans', sans-serif;
     flex: 1;
   }
 
-  .chevron-icon {
-    width: 18px;
-    height: 18px;
-    opacity: 0.7;
-    flex-shrink: 0;
-  }
+  .chevron { width: 18px; height: 18px; opacity: 0.7; flex-shrink: 0; }
 }
 
-.resources-list {
+.resources-body {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -461,31 +570,21 @@ $font: 'Plus Jakarta Sans', sans-serif;
   line-height: 22px;
   color: $gray-600;
   text-decoration: underline;
-  cursor: pointer;
-
   &:hover { color: $primary; }
 }
 
+// ==========================================
 // Typing indicator
-.typing-bubble {
-  border: 1px solid $gray-400;
-  border-radius: 0 $radius-bubble $radius-bubble $radius-bubble;
-  padding: 12px;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-}
-
+// ==========================================
 .typing-dots {
   display: flex;
-  align-items: center;
   gap: 4px;
   padding: 4px 0;
 
   span {
     width: 7px;
     height: 7px;
-    background: $gray-400;
+    background: $gray-border;
     border-radius: 50%;
     animation: bounce 1.2s infinite ease-in-out;
 
@@ -497,26 +596,28 @@ $font: 'Plus Jakarta Sans', sans-serif;
 
 @keyframes bounce {
   0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
+  40%           { transform: scale(1); opacity: 1; }
 }
 
+// ==========================================
 // Input section
+// ==========================================
 .input-section {
   padding: 0 30px 16px;
   flex-shrink: 0;
 }
 
-.chat-input-box {
+.input-box {
   background: #fff;
   border: 1.516px solid $primary;
-  border-radius: $radius-input;
+  border-radius: $r-input;
   padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.chat-textarea {
+.input-textarea {
   width: 100%;
   min-height: 54px;
   max-height: 120px;
@@ -530,16 +631,13 @@ $font: 'Plus Jakarta Sans', sans-serif;
   line-height: 22px;
   color: $text-dark;
   padding: 4px 12px;
-  border-radius: $radius-input;
+  border-radius: $r-input;
   box-sizing: border-box;
 
-  &::placeholder {
-    color: $text-medium;
-    opacity: 0.7;
-  }
+  &::placeholder { color: $text-mid; opacity: 0.7; }
 }
 
-.send-btn-wrapper {
+.send-row {
   display: flex;
   justify-content: flex-end;
 }
@@ -548,7 +646,7 @@ $font: 'Plus Jakarta Sans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(269deg, $primary 0.6%, $primary-light 99.8%);
+  background: linear-gradient(269deg, $primary 0.6%, $primary-lt 99.8%);
   border: none;
   border-radius: 30px;
   padding: 8px 10px 8px 6px;
@@ -556,17 +654,16 @@ $font: 'Plus Jakarta Sans', sans-serif;
   box-shadow: $shadow;
   transition: opacity 0.15s;
 
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
   &:not(:disabled):hover { opacity: 0.9; }
 
-  img {
-    width: 18px;
-    height: 18px;
-  }
+  img { width: 18px; height: 18px; }
 }
 
+// ==========================================
 // Footer
-.chatbot-footer {
+// ==========================================
+.modal-footer {
   background: $gray-100;
   display: flex;
   flex-direction: column;
@@ -576,7 +673,7 @@ $font: 'Plus Jakarta Sans', sans-serif;
   flex-shrink: 0;
 }
 
-.footer-disclaimer {
+.footer-note {
   font-family: $font;
   font-weight: 500;
   font-size: 12px;
@@ -587,12 +684,8 @@ $font: 'Plus Jakarta Sans', sans-serif;
   width: 100%;
 }
 
-.feedback-wrapper {
-  width: 138px;
-}
-
 .feedback-btn {
-  width: 100%;
+  width: 138px;
   background: #fff;
   border: 2px solid $teal;
   border-radius: 9.344px;
@@ -605,6 +698,5 @@ $font: 'Plus Jakarta Sans', sans-serif;
   text-align: center;
   cursor: pointer;
   transition: background 0.15s;
-
-  &:hover { background: rgba(0, 197, 207, 0.05); }
+  &:hover { background: rgba(0,197,207,0.05); }
 }

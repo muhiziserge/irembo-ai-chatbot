@@ -1,25 +1,27 @@
-<!-- Floating trigger button -->
-<button class="chatbot-trigger" (click)="toggleModal()" [class.open]="isOpen()" aria-label="Open IremboAI chatbot">
-  <div class="trigger-logo">
-    <img src="assets/images/logo-star.png" alt="" class="trigger-star" />
-    <img src="assets/images/logo-main.png" alt="IremboAI" class="trigger-main" />
+<!-- "Ask IremboAI" floating button — bottom-left -->
+<button class="chatbot-trigger" (click)="toggleModal()" [class.open]="isOpen()" aria-label="Ask IremboAI">
+  <div class="trigger-icon-group">
+    <img src="assets/images/btn-star.png" alt="" class="trigger-star" />
+    <img src="assets/images/btn-logo.png" alt="" class="trigger-logo" />
   </div>
+  <span class="trigger-label">Ask IremboAI</span>
 </button>
 
-<!-- Modal overlay -->
 @if (isOpen()) {
-  <div class="chatbot-overlay" (click)="closeModal()"></div>
+  <!-- Backdrop -->
+  <div class="chatbot-backdrop" (click)="closeModal()"></div>
 
+  <!-- Modal -->
   <div class="chatbot-modal" role="dialog" aria-label="IremboAI Chatbot" aria-modal="true">
 
     <!-- Header -->
     <div class="chatbot-header">
       <div class="header-brand">
-        <div class="header-logo">
+        <div class="header-logo-group">
           <img src="assets/images/logo-star.png" alt="" class="logo-star" />
           <img src="assets/images/logo-main.png" alt="IremboAI logo" class="logo-main" />
         </div>
-        <div class="header-info">
+        <div class="header-text">
           <div class="header-title-row">
             <span class="brand-name">IremboAI</span>
             <span class="beta-badge">BETA</span>
@@ -27,33 +29,33 @@
           <p class="brand-tagline">Instant answers about iremboGov services.</p>
         </div>
       </div>
-      <button class="close-btn" (click)="closeModal()" aria-label="Close chatbot">
-        <img src="assets/images/close-icon.png" alt="Close" />
+      <button class="close-btn" (click)="closeModal()" aria-label="Close">
+        <img src="assets/images/close-icon.png" alt="" />
       </button>
     </div>
 
     <div class="header-divider"></div>
 
-    <!-- Chat section -->
+    <!-- Chat messages -->
     <div class="chat-section" #chatSection>
 
-      <!-- Welcome state (no messages yet) -->
+      <!-- Welcome state -->
       @if (messages().length === 0) {
-        <div class="ai-response-wrapper">
-          <div class="ai-bubble welcome-bubble">
-            <div class="ai-icon-group">
+        <div class="ai-row">
+          <div class="ai-bubble">
+            <div class="ai-icon">
               <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
               <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
             </div>
-            <div class="welcome-content">
+            <div class="welcome-body">
               <p class="welcome-greeting">
-                <span class="greeting-emoji">👋🏾</span>
+                <span>👋🏾</span>
                 <strong> Hello! What do you need today?</strong>
               </p>
               <p class="welcome-sub">You can start with</p>
-              <div class="suggestions-list">
+              <div class="suggestions-col">
                 @for (s of suggestions; track s) {
-                  <button class="suggestion-chip" (click)="sendSuggestion(s)">{{ s }}</button>
+                  <button class="suggestion-pill" (click)="sendSuggestion(s)">{{ s }}</button>
                 }
               </div>
               <p class="welcome-hint">Not sure where to start? Just ask...</p>
@@ -65,39 +67,76 @@
       <!-- Message history -->
       @for (msg of messages(); track $index) {
         @if (msg.type === 'user') {
-          <div class="user-message-wrapper">
+          <div class="user-row">
             <div class="user-bubble">{{ msg.text }}</div>
           </div>
         } @else {
-          <div class="ai-response-wrapper">
+          <div class="ai-row">
             <div class="ai-bubble">
-              <div class="ai-icon-group">
+              <div class="ai-icon">
                 <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
                 <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
               </div>
-              <div class="ai-content">
+              <div class="ai-body">
+
                 <p class="ai-text" [innerHTML]="formatText(msg.text)"></p>
 
+                <!-- Parsed pills (slot results context) -->
+                @if (msg.parsedPills && msg.parsedPills.length > 0) {
+                  <div class="parsed-pills">
+                    @for (pill of msg.parsedPills; track pill.label) {
+                      <div class="parsed-pill">
+                        <span class="pill-emoji">{{ pill.emoji }}</span>
+                        <span class="pill-label">{{ pill.label }}</span>
+                      </div>
+                    }
+                  </div>
+                }
+
+                <!-- Slot list -->
+                @if (msg.slots && msg.slots.length > 0) {
+                  <div class="slot-list">
+                    @for (slot of msg.slots; track slot.date) {
+                      <div class="slot-item">
+                        <img src="assets/images/radio.png" alt="" class="slot-radio" />
+                        <div class="slot-left">
+                          <span class="slot-date">{{ slot.date }}</span>
+                          <span class="slot-loc">{{ slot.location }}</span>
+                        </div>
+                        <div class="slot-right">
+                          <span class="slot-time">{{ slot.time }}</span>
+                          <span class="seat-badge" [ngClass]="'seat-badge--' + slot.seatsColor">{{ slot.seats }}</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                  @if (msg.showBookButton) {
+                    <button class="book-btn">Book a slot</button>
+                  }
+                }
+
+                <!-- Quick reply chips -->
                 @if (msg.chips && msg.chips.length > 0) {
-                  <div class="quick-replies">
+                  <div class="quick-chips">
                     @for (chip of msg.chips; track chip) {
                       <button class="reply-chip" (click)="sendSuggestion(chip)">{{ chip }}</button>
                     }
                   </div>
                 }
 
+                <!-- Resources -->
                 @if (msg.resources && msg.resources.length > 0) {
                   <div class="resources-panel">
                     <button class="resources-header" (click)="toggleResources(msg)">
                       <span>📋 Check the following guides for more details</span>
                       <img
                         [src]="msg.expandedResources ? 'assets/images/chevron-up.png' : 'assets/images/chevron-down.png'"
-                        alt="Toggle resources"
-                        class="chevron-icon"
+                        alt=""
+                        class="chevron"
                       />
                     </button>
                     @if (!msg.expandedResources) {
-                      <div class="resources-list">
+                      <div class="resources-body">
                         @for (res of msg.resources; track res.url) {
                           <a [href]="res.url" target="_blank" rel="noopener noreferrer" class="resource-link">
                             {{ res.label }}
@@ -107,6 +146,7 @@
                     }
                   </div>
                 }
+
               </div>
             </div>
           </div>
@@ -115,9 +155,9 @@
 
       <!-- Typing indicator -->
       @if (isTyping()) {
-        <div class="ai-response-wrapper">
-          <div class="ai-bubble typing-bubble">
-            <div class="ai-icon-group">
+        <div class="ai-row">
+          <div class="ai-bubble ai-bubble--typing">
+            <div class="ai-icon">
               <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
               <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
             </div>
@@ -129,19 +169,19 @@
       }
     </div>
 
-    <!-- Input section -->
+    <!-- Input -->
     <div class="input-section">
-      <div class="chat-input-box">
+      <div class="input-box">
         <textarea
-          class="chat-textarea"
+          class="input-textarea"
           placeholder="Ask in Kinyarwanda, English, or French"
           [(ngModel)]="inputText"
           (keydown)="handleEnter($event)"
           rows="2"
           aria-label="Type your message"
         ></textarea>
-        <div class="send-btn-wrapper">
-          <button class="send-btn" (click)="sendMessage()" aria-label="Send message" [disabled]="!inputText.trim()">
+        <div class="send-row">
+          <button class="send-btn" (click)="sendMessage()" [disabled]="!inputText.trim()" aria-label="Send">
             <img src="assets/images/send-icon.png" alt="Send" />
           </button>
         </div>
@@ -149,11 +189,9 @@
     </div>
 
     <!-- Footer -->
-    <div class="chatbot-footer">
-      <p class="footer-disclaimer">IremboAI can make mistakes. Please verify from official sources.</p>
-      <div class="feedback-wrapper">
-        <button class="feedback-btn">Send us Feedback</button>
-      </div>
+    <div class="modal-footer">
+      <p class="footer-note">IremboAI can make mistakes. Please verify from official sources.</p>
+      <button class="feedback-btn">Send us Feedback</button>
     </div>
 
   </div>

@@ -1,37 +1,124 @@
-<main class="app-container">
-  <div class="demo-page">
-    <div class="demo-content">
-      <div class="irembo-logo-area">
-        <span class="irembo-wordmark">iremboGov</span>
+<div class="page-wrap">
+
+  <!-- Chrome-style browser frame (matches Figma) -->
+  <div class="chrome-frame">
+    <div class="chrome-tabbar">
+      <div class="chrome-dots">
+        <span class="dot dot--red"></span>
+        <span class="dot dot--yellow"></span>
+        <span class="dot dot--green"></span>
       </div>
-      <h1 class="demo-title">Welcome to iremboGov</h1>
-      <p class="demo-subtitle">
-        Your one-stop platform for Rwandan government services. Apply for
-        certificates, pay fines, and more — all online.
-      </p>
-      <div class="demo-services">
-        <div class="service-card">
-          <span class="service-icon">📄</span>
-          <span>Birth Certificate</span>
+      <div class="chrome-tab">
+        <div class="tab-favicon">
+          <span class="favicon-letter">i</span>
         </div>
-        <div class="service-card">
-          <span class="service-icon">🚗</span>
-          <span>Driving Test</span>
-        </div>
-        <div class="service-card">
-          <span class="service-icon">🏛️</span>
-          <span>Land Services</span>
-        </div>
-        <div class="service-card">
-          <span class="service-icon">✈️</span>
-          <span>Visa &amp; Travel</span>
-        </div>
+        <span class="tab-title">IremboGov</span>
+        <span class="tab-close">×</span>
       </div>
-      <p class="demo-hint">
-        💬 Try IremboAI — click the chat button in the bottom right corner!
-      </p>
+    </div>
+    <div class="chrome-navbar">
+      <div class="chrome-nav-controls">
+        <span class="nav-arrow">‹</span>
+        <span class="nav-arrow nav-arrow--fwd">›</span>
+        <span class="nav-refresh">↻</span>
+      </div>
+      <div class="chrome-urlbar">
+        <span class="url-lock">🔒</span>
+        <span class="url-text">irembo.gov.rw</span>
+      </div>
     </div>
   </div>
 
-  <app-chatbot></app-chatbot>
-</main>
+  <!-- iremboGov site -->
+  <div class="site">
+
+    <!-- Top navbar -->
+    <nav class="topnav">
+      <div class="topnav-logo">
+        <span class="logo-irembo">irembo</span><span class="logo-gov">Gov</span>
+      </div>
+      <div class="topnav-actions">
+        <button class="nav-btn nav-btn--search">
+          <span class="nav-btn-icon">🔍</span> Find application
+        </button>
+        <button class="nav-btn">
+          <span class="nav-btn-icon">✏️</span> Sign Up
+        </button>
+        <button class="nav-btn">
+          <span class="nav-btn-icon">👤</span> Login
+        </button>
+        <button class="nav-btn nav-lang">
+          English <span>▾</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero section -->
+    <section class="hero">
+      <h1 class="hero-title">Welcome</h1>
+      <div class="hero-search">
+        <span class="hero-search-icon">🔍</span>
+        <input type="text" placeholder="Search for a service" class="hero-search-input" />
+      </div>
+    </section>
+
+    <!-- Content area -->
+    <section class="content-area">
+      <h2 class="section-title">Immigration And Emigration</h2>
+      <div class="service-columns">
+        <div class="service-col">
+          <div class="service-col-divider"></div>
+          <ul class="service-list">
+            <li>Penalty Payments</li>
+            <li>DPA payment</li>
+            <li>CEPGL Services</li>
+            <li>Rwandan Nationality</li>
+            <li>Permit and Visa Transfer</li>
+          </ul>
+        </div>
+        <div class="service-col">
+          <div class="service-col-divider"></div>
+          <ul class="service-list">
+            <li>Permits</li>
+            <li>Foreigner ID Card</li>
+            <li>Foreigner Travel Document</li>
+            <li>e-Passport Application</li>
+            <li>Laissez-passer</li>
+            <li>Visa Application</li>
+          </ul>
+        </div>
+        <div class="service-col">
+          <div class="service-col-divider"></div>
+          <ul class="service-list">
+            <li class="service-list__active">Rwandan Nationality by Acquisition</li>
+            <li>Rwandan Nationality by Origin</li>
+            <li>Renunciation of Rwandan nationality</li>
+            <li>Recovery of Rwandan nationality</li>
+            <li>Payment of Granted Nationality</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <span class="footer-copy">© copyright irembo 2023 All rights reserved</span>
+      <div class="footer-center">
+        <span class="footer-phone">📞 9090</span>
+        <span class="footer-follow">Follow us on</span>
+        <div class="footer-socials">
+          <span>𝕏</span>
+          <span>f</span>
+          <span>in</span>
+          <span>M</span>
+        </div>
+      </div>
+      <span class="footer-links">Terms of Use &nbsp;•&nbsp; Get Help</span>
+    </footer>
+
+  </div><!-- /site -->
+
+</div><!-- /page-wrap -->
+
+<!-- IremboAI chatbot widget -->
+<app-chatbot></app-chatbot>

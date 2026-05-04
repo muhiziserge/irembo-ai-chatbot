@@ -1,90 +1,353 @@
-.app-container {
+$primary: #0063cf;
+$primary-lt: #0099e7;
+$font-nunito: 'Nunito Sans', sans-serif;
+$font-jakarta: 'Plus Jakarta Sans', sans-serif;
+
+// ============================
+// Page wrapper
+// ============================
+.page-wrap {
   min-height: 100vh;
-  background: #f8fafc;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
-.demo-page {
+// ============================
+// Chrome browser frame
+// ============================
+.chrome-frame {
+  background: #fff;
+  border-bottom: 1px solid #dbdcdd;
+  flex-shrink: 0;
+}
+
+.chrome-tabbar {
+  background: #dfe1e5;
+  height: 42px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 20px;
+  gap: 0;
+  position: relative;
+
+  .chrome-dots {
+    position: absolute;
+    left: 21px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    &--red    { background: #ec6b5e; }
+    &--yellow { background: #f4bf4f; }
+    &--green  { background: #61c453; }
+  }
+}
+
+.chrome-tab {
+  background: #fff;
+  border-radius: 8px 8px 0 0;
+  height: 34px;
+  min-width: 200px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 40px 20px;
-}
+  gap: 7px;
+  padding: 0 14px 0 16px;
+  margin-left: 66px;
 
-.demo-content {
-  max-width: 600px;
-  width: 100%;
-  text-align: center;
-}
+  .tab-favicon {
+    width: 14px;
+    height: 14px;
+    background: $primary;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-jakarta;
+    font-weight: 700;
+    font-size: 8px;
+    color: #fff;
+    flex-shrink: 0;
+  }
 
-.irembo-logo-area {
-  margin-bottom: 24px;
+  .tab-title {
+    font-family: $font-jakarta;
+    font-weight: 500;
+    font-size: 12px;
+    color: #161717;
+    flex: 1;
+    white-space: nowrap;
+  }
 
-  .irembo-wordmark {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    font-size: 28px;
-    color: #0063cf;
-    letter-spacing: -0.5px;
+  .tab-close {
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
   }
 }
 
-.demo-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: 36px;
-  color: #1d1d1d;
-  margin: 0 0 16px;
-}
-
-.demo-subtitle {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #475467;
-  margin: 0 0 40px;
-}
-
-.demo-services {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 40px;
-
-  @media (min-width: 480px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.service-card {
+.chrome-navbar {
   background: #fff;
-  border: 1px solid #d9deeb;
-  border-radius: 12px;
-  padding: 20px 12px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.chrome-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.nav-arrow {
+  font-size: 18px;
+  color: #666;
+  padding: 2px 6px;
+  cursor: pointer;
+  &--fwd { color: #bbb; cursor: default; }
+}
+
+.nav-refresh {
+  font-size: 14px;
+  color: #666;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.chrome-urlbar {
+  flex: 1;
+  background: #f1f3f4;
+  border-radius: 9999px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+
+  .url-lock { font-size: 10px; color: #444; }
+  .url-text  { font-family: $font-jakarta; font-size: 14px; color: #1f1f1f; }
+}
+
+// ============================
+// iremboGov site
+// ============================
+.site {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+// Top navbar
+.topnav {
+  background: linear-gradient(168deg, rgb(0,153,232) 0%, rgb(0,99,207) 100%);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56px;
+
+  .topnav-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+
+    .logo-irembo {
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .logo-gov {
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      color: #fff;
+      opacity: 0.9;
+    }
+  }
+
+  .topnav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    background: rgba(0,0,0,0.15);
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12.6px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s;
+
+    &:hover { background: rgba(0,0,0,0.25); }
+    &--search { background: #0099ef; &:hover { background: #0080cc; } }
+
+    .nav-btn-icon { font-size: 12px; }
+  }
+
+  .nav-lang {
+    background: transparent;
+    &:hover { background: rgba(0,0,0,0.1); }
+  }
+}
+
+// Hero
+.hero {
+  background: linear-gradient(168deg, rgb(0,153,232) 0%, rgb(0,99,207) 100%);
+  padding: 50px 0 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  color: #475467;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  gap: 20px;
 
-  .service-icon {
-    font-size: 28px;
+  .hero-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 33px;
+    color: #fff;
+    letter-spacing: -0.7px;
+    margin: 0;
+  }
+
+  .hero-search {
+    background: #fff;
+    border-radius: 4px;
+    width: 615px;
+    max-width: 90vw;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+
+    .hero-search-icon { font-size: 16px; color: rgba(0,0,0,0.45); }
+
+    .hero-search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px;
+      color: rgba(0,0,0,0.7);
+      background: transparent;
+      &::placeholder { color: rgba(0,0,0,0.45); }
+    }
   }
 }
 
-.demo-hint {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  color: #667085;
+// Content
+.content-area {
+  flex: 1;
+  padding: 40px 56px 48px;
+  background: #f8f9fa;
+
+  .section-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18.9px;
+    color: #000;
+    letter-spacing: -0.16px;
+    margin: 0 0 24px;
+  }
+}
+
+.service-columns {
+  display: flex;
+  gap: 0;
+}
+
+.service-col {
+  display: flex;
+  gap: 11px;
+  flex: 1;
+
+  .service-col-divider {
+    width: 1.5px;
+    background: $primary;
+    opacity: 0.3;
+    flex-shrink: 0;
+  }
+
+  .service-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    li {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 12.6px;
+      color: #000;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.12s;
+      &:hover { background: rgba(0,99,207,0.06); }
+
+      &.service-list__active {
+        font-weight: 700;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Footer
+.site-footer {
   background: #fff;
-  border: 1px solid #d9deeb;
-  border-radius: 10px;
-  padding: 12px 20px;
-  display: inline-block;
+  border-top: 1px solid #eee;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56px;
+
+  .footer-copy, .footer-links {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12.6px;
+    color: #000;
+    white-space: nowrap;
+  }
+
+  .footer-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer-phone, .footer-follow {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12.6px;
+    color: #000;
+  }
+
+  .footer-phone { font-weight: 700; color: $primary; }
+
+  .footer-socials {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: #555;
+  }
 }

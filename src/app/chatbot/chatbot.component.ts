@@ -7,13 +7,35 @@ export interface Resource {
   url: string;
 }
 
+export interface SlotItem {
+  date: string;
+  location: string;
+  time: string;
+  seats: number;
+  seatsColor: 'orange' | 'blue' | 'green';
+}
+
+export interface ParsedPill {
+  emoji: string;
+  label: string;
+}
+
 export interface ChatMessage {
   type: 'user' | 'ai';
   text: string;
   chips?: string[];
   resources?: Resource[];
   expandedResources?: boolean;
+  slots?: SlotItem[];
+  parsedPills?: ParsedPill[];
+  showBookButton?: boolean;
 }
+
+type ConversationState =
+  | null
+  | 'slots_category'
+  | 'slots_district'
+  | 'slots_date';
 
 @Component({
   selector: 'app-chatbot',
@@ -31,12 +53,15 @@ export class ChatbotComponent implements AfterViewChecked {
   messages = signal<ChatMessage[]>([]);
 
   suggestions = [
-    'Pay Traffic fines',
+    'I want to view available driving test slots.',
     'Check my application status',
     'How to renew my visa',
     'How to transfer ownership of my land'
   ];
 
+  private conversationState: ConversationState = null;
+  private selectedCategory = '';
+  private selectedDistrict = '';
   private shouldScrollToBottom = false;
 
   ngAfterViewChecked(): void {
@@ -86,17 +111,76 @@ export class ChatbotComponent implements AfterViewChecked {
   private generateAiResponse(userText: string): void {
     this.isTyping.set(true);
     this.shouldScrollToBottom = true;
-
     setTimeout(() => {
       const response = this.buildResponse(userText);
       this.messages.update(msgs => [...msgs, response]);
       this.isTyping.set(false);
       this.shouldScrollToBottom = true;
-    }, 1200);
+    }, 1000);
   }
 
   private buildResponse(userText: string): ChatMessage {
-    const lower = userText.toLowerCase();
+    const lower = userText.toLowerCase().trim();
+
+    // ---------- Slots guided flow ----------
+    if (this.conversationState === 'slots_category') {
+      const cat = userText.toUpperCase();
+      if (['A', 'B', 'C', 'D'].includes(cat)) {
+        this.selectedCategory = cat;
+        this.conversationState = 'slots_district';
+        return {
+          type: 'ai',
+          text: `Got it — Category ${cat} 🚗\n\nWhich district works best for you? select or type any.`,
+          chips: ['Gasabo', 'Kicukiro', 'Nyarugenge', 'Bugesera']
+        };
+      }
+      return {
+        type: 'ai',
+        text: `Please select a license category: A, B, C, or D.`,
+        chips: ['A', 'B', 'C', 'D']
+      };
+    }
+
+    if (this.conversationState === 'slots_district') {
+      this.selectedDistrict = userText;
+      this.conversationState = 'slots_date';
+      return {
+        type: 'ai',
+        text: `Got it — Category ${this.selectedCategory} in ${userText} district\n\nwhen? Type a date or time range.`
+      };
+    }
+
+    if (this.conversationState === 'slots_date') {
+      const cat = this.selectedCategory;
+      const dist = this.selectedDistrict;
+      this.conversationState = null;
+      return {
+        type: 'ai',
+        text: `Found 5 slots matching:`,
+        parsedPills: [
+          { emoji: '📍', label: dist },
+          { emoji: '🚗', label: `Category ${cat}` },
+          { emoji: '📅', label: userText }
+        ],
+        slots: [
+          { date: '05-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 3,  seatsColor: 'orange' },
+          { date: '06-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 19, seatsColor: 'blue'   },
+          { date: '07-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 20, seatsColor: 'green'  },
+          { date: '08-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 19, seatsColor: 'blue'   }
+        ],
+        showBookButton: true
+      };
+    }
+
+    // ---------- Intent detection ----------
+    if (lower.includes('driving test') || lower.includes('test slot') || lower.includes('driving slot')) {
+      this.conversationState = 'slots_category';
+      return {
+        type: 'ai',
+        text: `Sure! I can help you find available driving test slots.\n\nFirst, which license category are you applying for?`,
+        chips: ['A', 'B', 'C', 'D']
+      };
+    }
 
     if (lower.includes('birth certificate') || lower.includes('certificate')) {
       return {
@@ -110,44 +194,24 @@ export class ChatbotComponent implements AfterViewChecked {
       };
     }
 
-    if (lower.includes('driving') || lower.includes('slot') || lower.includes('license')) {
-      return {
-        type: 'ai',
-        text: `Sure! I can help you find available driving test slots.\n\nFirst, which license category are you applying for?`,
-        chips: ['A', 'B', 'C', 'D']
-      };
-    }
-
-    if (lower === 'a' || lower === 'b' || lower === 'c' || lower === 'd') {
-      return {
-        type: 'ai',
-        text: `Got it — Category ${userText.toUpperCase()} 🚗\n\nWhich district works best for you?`,
-        chips: ['Gasabo', 'Kicukiro', 'Nyarugenge', 'Nearest to me']
-      };
-    }
-
     if (lower.includes('traffic') || lower.includes('fine')) {
       return {
         type: 'ai',
-        text: `To pay traffic fines on iremboGov:\n\n**Steps**\n1. Log in to your iremboGov account\n2. Navigate to **Traffic Fines** under the Transport section\n3. Enter your vehicle registration number\n4. Review the fines and proceed to payment\n\nPayment can be done via MoMo, bank card, or Irembo Pay.`,
-        resources: [
-          { label: 'How to pay traffic fines on iremboGov', url: 'https://irembo.gov.rw' }
-        ],
-        expandedResources: false
+        text: `To pay traffic fines on iremboGov:\n\n**Steps**\n1. Log in to your iremboGov account\n2. Go to **Traffic Fines** under Transport\n3. Enter your vehicle registration number\n4. Review fines and proceed to payment\n\nPayment: MoMo, bank card, or Irembo Pay.`
       };
     }
 
     if (lower.includes('application') || lower.includes('status')) {
       return {
         type: 'ai',
-        text: `To check your application status:\n\n1. Log in to your **iremboGov** account\n2. Go to **My Applications** in the dashboard\n3. Select the application you want to check\n\nYou can also receive real-time updates via SMS or email.`
+        text: `To check your application status:\n\n1. Log in to **iremboGov**\n2. Go to **My Applications** in the dashboard\n3. Select the application you want to track\n\nYou also receive real-time SMS/email updates.`
       };
     }
 
     if (lower.includes('visa') || lower.includes('renew')) {
       return {
         type: 'ai',
-        text: `To renew your visa on iremboGov:\n\n**📋 Requirements**\n- Valid passport (at least 6 months validity)\n- Current visa or residence permit\n- Proof of accommodation in Rwanda\n- Completed online application form\n\nThe process takes 3–5 working days.`,
+        text: `To renew your visa on iremboGov:\n\n**📋 Requirements**\n- Valid passport (min 6 months validity)\n- Current visa or residence permit\n- Proof of accommodation in Rwanda\n\nProcessing: 3–5 working days.`,
         resources: [
           { label: 'Guide to visa renewal in Rwanda', url: 'https://irembo.gov.rw' }
         ],
@@ -158,21 +222,20 @@ export class ChatbotComponent implements AfterViewChecked {
     if (lower.includes('land') || lower.includes('ownership') || lower.includes('transfer')) {
       return {
         type: 'ai',
-        text: `To transfer land ownership:\n\n**📋 Required Documents**\n- Original land title certificate\n- National IDs of both parties\n- Proof of payment/sale agreement\n- Tax clearance certificate\n\nVisit your nearest RLMUA office or apply online via iremboGov.`
+        text: `To transfer land ownership:\n\n**📋 Required Documents**\n- Original land title certificate\n- National IDs of both parties\n- Proof of payment/sale agreement\n- Tax clearance certificate\n\nApply online via iremboGov or at your nearest RLMUA office.`
       };
     }
 
     return {
       type: 'ai',
-      text: `Thank you for your question! I can help you with various iremboGov services including:\n\n- Birth certificates\n- Driving test slots\n- Traffic fines payment\n- Visa renewal\n- Land transfers\n- Application status checks\n\nCould you provide more details about what you need?`
+      text: `Thank you for your question! I can help with:\n\n- 🚗 Driving test slots\n- 📄 Birth certificates\n- ✈️ Visa renewal\n- 🏛️ Land transfers\n- 📋 Application status\n\nCould you share more details?`
     };
   }
 
   formatText(text: string): string {
     return text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>')
-      .replace(/^- (.+)$/gm, '• $1');
+      .replace(/\n/g, '<br>');
   }
 
   private scrollToBottom(): void {
