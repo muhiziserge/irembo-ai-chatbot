@@ -1,0 +1,160 @@
+<!-- Floating trigger button -->
+<button class="chatbot-trigger" (click)="toggleModal()" [class.open]="isOpen()" aria-label="Open IremboAI chatbot">
+  <div class="trigger-logo">
+    <img src="assets/images/logo-star.png" alt="" class="trigger-star" />
+    <img src="assets/images/logo-main.png" alt="IremboAI" class="trigger-main" />
+  </div>
+</button>
+
+<!-- Modal overlay -->
+@if (isOpen()) {
+  <div class="chatbot-overlay" (click)="closeModal()"></div>
+
+  <div class="chatbot-modal" role="dialog" aria-label="IremboAI Chatbot" aria-modal="true">
+
+    <!-- Header -->
+    <div class="chatbot-header">
+      <div class="header-brand">
+        <div class="header-logo">
+          <img src="assets/images/logo-star.png" alt="" class="logo-star" />
+          <img src="assets/images/logo-main.png" alt="IremboAI logo" class="logo-main" />
+        </div>
+        <div class="header-info">
+          <div class="header-title-row">
+            <span class="brand-name">IremboAI</span>
+            <span class="beta-badge">BETA</span>
+          </div>
+          <p class="brand-tagline">Instant answers about iremboGov services.</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="closeModal()" aria-label="Close chatbot">
+        <img src="assets/images/close-icon.png" alt="Close" />
+      </button>
+    </div>
+
+    <div class="header-divider"></div>
+
+    <!-- Chat section -->
+    <div class="chat-section" #chatSection>
+
+      <!-- Welcome state (no messages yet) -->
+      @if (messages().length === 0) {
+        <div class="ai-response-wrapper">
+          <div class="ai-bubble welcome-bubble">
+            <div class="ai-icon-group">
+              <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
+              <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
+            </div>
+            <div class="welcome-content">
+              <p class="welcome-greeting">
+                <span class="greeting-emoji">👋🏾</span>
+                <strong> Hello! What do you need today?</strong>
+              </p>
+              <p class="welcome-sub">You can start with</p>
+              <div class="suggestions-list">
+                @for (s of suggestions; track s) {
+                  <button class="suggestion-chip" (click)="sendSuggestion(s)">{{ s }}</button>
+                }
+              </div>
+              <p class="welcome-hint">Not sure where to start? Just ask...</p>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Message history -->
+      @for (msg of messages(); track $index) {
+        @if (msg.type === 'user') {
+          <div class="user-message-wrapper">
+            <div class="user-bubble">{{ msg.text }}</div>
+          </div>
+        } @else {
+          <div class="ai-response-wrapper">
+            <div class="ai-bubble">
+              <div class="ai-icon-group">
+                <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
+                <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
+              </div>
+              <div class="ai-content">
+                <p class="ai-text" [innerHTML]="formatText(msg.text)"></p>
+
+                @if (msg.chips && msg.chips.length > 0) {
+                  <div class="quick-replies">
+                    @for (chip of msg.chips; track chip) {
+                      <button class="reply-chip" (click)="sendSuggestion(chip)">{{ chip }}</button>
+                    }
+                  </div>
+                }
+
+                @if (msg.resources && msg.resources.length > 0) {
+                  <div class="resources-panel">
+                    <button class="resources-header" (click)="toggleResources(msg)">
+                      <span>📋 Check the following guides for more details</span>
+                      <img
+                        [src]="msg.expandedResources ? 'assets/images/chevron-up.png' : 'assets/images/chevron-down.png'"
+                        alt="Toggle resources"
+                        class="chevron-icon"
+                      />
+                    </button>
+                    @if (!msg.expandedResources) {
+                      <div class="resources-list">
+                        @for (res of msg.resources; track res.url) {
+                          <a [href]="res.url" target="_blank" rel="noopener noreferrer" class="resource-link">
+                            {{ res.label }}
+                          </a>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      }
+
+      <!-- Typing indicator -->
+      @if (isTyping()) {
+        <div class="ai-response-wrapper">
+          <div class="ai-bubble typing-bubble">
+            <div class="ai-icon-group">
+              <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
+              <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
+            </div>
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Input section -->
+    <div class="input-section">
+      <div class="chat-input-box">
+        <textarea
+          class="chat-textarea"
+          placeholder="Ask in Kinyarwanda, English, or French"
+          [(ngModel)]="inputText"
+          (keydown)="handleEnter($event)"
+          rows="2"
+          aria-label="Type your message"
+        ></textarea>
+        <div class="send-btn-wrapper">
+          <button class="send-btn" (click)="sendMessage()" aria-label="Send message" [disabled]="!inputText.trim()">
+            <img src="assets/images/send-icon.png" alt="Send" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="chatbot-footer">
+      <p class="footer-disclaimer">IremboAI can make mistakes. Please verify from official sources.</p>
+      <div class="feedback-wrapper">
+        <button class="feedback-btn">Send us Feedback</button>
+      </div>
+    </div>
+
+  </div>
+}

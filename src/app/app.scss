@@ -1,0 +1,90 @@
+.app-container {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.demo-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.demo-content {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.irembo-logo-area {
+  margin-bottom: 24px;
+
+  .irembo-wordmark {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: #0063cf;
+    letter-spacing: -0.5px;
+  }
+}
+
+.demo-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: #1d1d1d;
+  margin: 0 0 16px;
+}
+
+.demo-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #475467;
+  margin: 0 0 40px;
+}
+
+.demo-services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.service-card {
+  background: #fff;
+  border: 1px solid #d9deeb;
+  border-radius: 12px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: #475467;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+  .service-icon {
+    font-size: 28px;
+  }
+}
+
+.demo-hint {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #667085;
+  background: #fff;
+  border: 1px solid #d9deeb;
+  border-radius: 10px;
+  padding: 12px 20px;
+  display: inline-block;
+}
