@@ -1,8 +1,8 @@
 <!-- "Ask IremboAI" floating button — bottom-left -->
 <button class="chatbot-trigger" (click)="toggleModal()" [class.open]="isOpen()" aria-label="Ask IremboAI">
   <div class="trigger-icon-group">
-    <img src="assets/images/btn-star.png" alt="" class="trigger-star" />
-    <img src="assets/images/btn-logo.png" alt="" class="trigger-logo" />
+    <img src="images/btn-star.svg" alt="" class="trigger-star" />
+    <img src="images/btn-logo.svg" alt="" class="trigger-logo" />
   </div>
   <span class="trigger-label">Ask IremboAI</span>
 </button>
@@ -18,8 +18,8 @@
     <div class="chatbot-header">
       <div class="header-brand">
         <div class="header-logo-group">
-          <img src="assets/images/logo-star.png" alt="" class="logo-star" />
-          <img src="assets/images/logo-main.png" alt="IremboAI logo" class="logo-main" />
+          <img src="images/logo-star.svg" alt="" class="logo-star" />
+          <img src="images/logo-main.svg" alt="IremboAI logo" class="logo-main" />
         </div>
         <div class="header-text">
           <div class="header-title-row">
@@ -30,7 +30,7 @@
         </div>
       </div>
       <button class="close-btn" (click)="closeModal()" aria-label="Close">
-        <img src="assets/images/close-icon.png" alt="" />
+        <img src="images/close-icon.svg" alt="" />
       </button>
     </div>
 
@@ -44,8 +44,8 @@
         <div class="ai-row">
           <div class="ai-bubble">
             <div class="ai-icon">
-              <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
-              <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
+              <img src="images/ai-icon-dot.svg" alt="" class="ai-dot" />
+              <img src="images/ai-icon-main.svg" alt="" class="ai-circle" />
             </div>
             <div class="welcome-body">
               <p class="welcome-greeting">
@@ -74,8 +74,8 @@
           <div class="ai-row">
             <div class="ai-bubble">
               <div class="ai-icon">
-                <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
-                <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
+                <img src="images/ai-icon-dot.svg" alt="" class="ai-dot" />
+                <img src="images/ai-icon-main.svg" alt="" class="ai-circle" />
               </div>
               <div class="ai-body">
 
@@ -98,7 +98,7 @@
                   <div class="slot-list">
                     @for (slot of msg.slots; track slot.date) {
                       <div class="slot-item">
-                        <img src="assets/images/radio.png" alt="" class="slot-radio" />
+                        <img src="images/radio.svg" alt="" class="slot-radio" />
                         <div class="slot-left">
                           <span class="slot-date">{{ slot.date }}</span>
                           <span class="slot-loc">{{ slot.location }}</span>
@@ -130,7 +130,7 @@
                     <button class="resources-header" (click)="toggleResources(msg)">
                       <span>📋 Check the following guides for more details</span>
                       <img
-                        [src]="msg.expandedResources ? 'assets/images/chevron-up.png' : 'assets/images/chevron-down.png'"
+                        [src]="msg.expandedResources ? 'images/chevron-up.svg' : 'images/chevron-down.svg'"
                         alt=""
                         class="chevron"
                       />
@@ -158,8 +158,8 @@
         <div class="ai-row">
           <div class="ai-bubble ai-bubble--typing">
             <div class="ai-icon">
-              <img src="assets/images/ai-icon-dot.png" alt="" class="ai-dot" />
-              <img src="assets/images/ai-icon-main.png" alt="" class="ai-circle" />
+              <img src="images/ai-icon-dot.svg" alt="" class="ai-dot" />
+              <img src="images/ai-icon-main.svg" alt="" class="ai-circle" />
             </div>
             <div class="typing-dots">
               <span></span><span></span><span></span>
@@ -182,7 +182,7 @@
         ></textarea>
         <div class="send-row">
           <button class="send-btn" (click)="sendMessage()" [disabled]="!inputText.trim()" aria-label="Send">
-            <img src="assets/images/send-icon.png" alt="Send" />
+            <img src="images/send-icon.svg" alt="Send" />
           </button>
         </div>
       </div>
