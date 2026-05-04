@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/irembo-ai-chatbot/browser",
+  "installCommand": "npm install",
+  "framework": null
+}
