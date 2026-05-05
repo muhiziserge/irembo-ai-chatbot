@@ -387,8 +387,16 @@ $font:         'Plus Jakarta Sans', sans-serif;
   color: $primary;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+
   &:hover { background: #b3d3f5; }
+
+  &--selected {
+    background: $primary;
+    color: #fff;
+    border-color: $primary;
+    &:hover { background: $primary; opacity: 0.9; }
+  }
 }
 
 // ==========================================

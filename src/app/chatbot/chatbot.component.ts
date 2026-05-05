@@ -24,6 +24,7 @@ export interface ChatMessage {
   type: 'user' | 'ai';
   text: string;
   chips?: string[];
+  selectedChip?: string;
   resources?: Resource[];
   expandedResources?: boolean;
   slots?: SlotItem[];
@@ -81,6 +82,12 @@ export class ChatbotComponent implements AfterViewChecked {
   }
 
   sendSuggestion(text: string): void {
+    const msgs = this.messages();
+    const lastChipMsg = [...msgs].reverse().find(m => m.type === 'ai' && m.chips && m.chips.length > 0);
+    if (lastChipMsg) {
+      lastChipMsg.selectedChip = text;
+      this.messages.set([...msgs]);
+    }
     this.addUserMessage(text);
     this.generateAiResponse(text);
   }
@@ -147,7 +154,8 @@ export class ChatbotComponent implements AfterViewChecked {
       this.conversationState = 'slots_date';
       return {
         type: 'ai',
-        text: `Got it — Category ${this.selectedCategory} in ${userText} district\n\nwhen? Type a date or time range.`
+        text: `Got it — Category ${this.selectedCategory} in ${userText} district\n\nwhen? Choose or Type a date or time range.`,
+        chips: ['This week', 'This month', 'Next week', 'Next month']
       };
     }
 
@@ -157,7 +165,7 @@ export class ChatbotComponent implements AfterViewChecked {
       this.conversationState = null;
       return {
         type: 'ai',
-        text: `Found 5 slots matching:`,
+        text: `Found 10 slots matching:`,
         parsedPills: [
           { icon: 'images/icon-pin.svg',      label: dist },
           { icon: 'images/icon-car.svg',      label: `Category ${cat}` },

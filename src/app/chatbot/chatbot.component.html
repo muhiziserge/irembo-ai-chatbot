@@ -118,7 +118,11 @@
                 @if (msg.chips && msg.chips.length > 0) {
                   <div class="quick-chips">
                     @for (chip of msg.chips; track chip) {
-                      <button class="reply-chip" (click)="sendSuggestion(chip)">{{ chip }}</button>
+                      <button
+                        class="reply-chip"
+                        [class.reply-chip--selected]="msg.selectedChip === chip"
+                        (click)="sendSuggestion(chip)"
+                      >{{ chip }}</button>
                     }
                   </div>
                 }
