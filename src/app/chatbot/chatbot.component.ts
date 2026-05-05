@@ -16,7 +16,7 @@ export interface SlotItem {
 }
 
 export interface ParsedPill {
-  emoji: string;
+  icon: string;
   label: string;
 }
 
@@ -158,9 +158,9 @@ export class ChatbotComponent implements AfterViewChecked {
         type: 'ai',
         text: `Found 5 slots matching:`,
         parsedPills: [
-          { emoji: '📍', label: dist },
-          { emoji: '🚗', label: `Category ${cat}` },
-          { emoji: '📅', label: userText }
+          { icon: 'images/icon-pin.svg',      label: dist },
+          { icon: 'images/icon-car.svg',      label: `Category ${cat}` },
+          { icon: 'images/icon-calendar.svg', label: userText }
         ],
         slots: [
           { date: '05-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 3,  seatsColor: 'orange' },

@@ -412,7 +412,7 @@ $font:         'Plus Jakarta Sans', sans-serif;
   font-size: 12px;
   white-space: nowrap;
 
-  .pill-emoji { font-size: 12px; }
+  .pill-icon  { width: 14px; height: 14px; flex-shrink: 0; }
   .pill-label { font-weight: 600; color: $primary; }
 }
 
@@ -434,12 +434,6 @@ $font:         'Plus Jakarta Sans', sans-serif;
   border-radius: 8px;
   padding: 10px 12px;
   overflow: hidden;
-
-  .slot-radio {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
 
   .slot-left {
     flex: 1;
@@ -506,7 +500,6 @@ $font:         'Plus Jakarta Sans', sans-serif;
 
 .book-btn {
   width: 100%;
-  background: $primary;
   border: none;
   border-radius: 8px;
   padding: 10px 14px;
@@ -514,12 +507,16 @@ $font:         'Plus Jakarta Sans', sans-serif;
   font-weight: 600;
   font-size: 13px;
   line-height: 18px;
-  color: #fff;
   cursor: pointer;
   text-align: center;
   margin-top: 4px;
   transition: opacity 0.15s;
   &:hover { opacity: 0.88; }
+
+  &--secondary {
+    background: $chip-bg;
+    color: $primary;
+  }
 }
 
 // ==========================================

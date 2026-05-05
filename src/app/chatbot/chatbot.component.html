@@ -86,7 +86,7 @@
                   <div class="parsed-pills">
                     @for (pill of msg.parsedPills; track pill.label) {
                       <div class="parsed-pill">
-                        <span class="pill-emoji">{{ pill.emoji }}</span>
+                        <img [src]="pill.icon" class="pill-icon" alt="" />
                         <span class="pill-label">{{ pill.label }}</span>
                       </div>
                     }
@@ -98,7 +98,6 @@
                   <div class="slot-list">
                     @for (slot of msg.slots; track slot.date) {
                       <div class="slot-item">
-                        <img src="images/radio.svg" alt="" class="slot-radio" />
                         <div class="slot-left">
                           <span class="slot-date">{{ slot.date }}</span>
                           <span class="slot-loc">{{ slot.location }}</span>
@@ -111,7 +110,7 @@
                     }
                   </div>
                   @if (msg.showBookButton) {
-                    <button class="book-btn">Book a slot</button>
+                    <button class="book-btn book-btn--secondary">See all 10 slots →</button>
                   }
                 }
 
