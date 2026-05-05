@@ -19,6 +19,19 @@ $r-input:      10.105px;
 $font:         'Plus Jakarta Sans', sans-serif;
 
 // ==========================================
+// Animated border — CSS custom property
+// ==========================================
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderSpin {
+  to { --border-angle: 360deg; }
+}
+
+// ==========================================
 // Floating trigger — bottom LEFT
 // ==========================================
 .chatbot-trigger {
@@ -31,21 +44,53 @@ $font:         'Plus Jakarta Sans', sans-serif;
   padding: 10px 16px;
   height: 54px;
   border-radius: 32px;
-  background: linear-gradient(258deg, $primary 6.3%, $primary-lt 98.4%);
-  border: 2px solid $yellow-btn;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  box-shadow: $shadow;
   z-index: 1000;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  // Glow behind the button
+  box-shadow:
+    0 0 18px 5px rgba(255, 218, 27, 0.50),
+    0 0 38px 10px rgba(0, 99, 207, 0.28);
 
-  &:hover   { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,99,207,0.35); }
-  &.open    { transform: scale(0.96); }
+  &:hover { transform: translateY(-2px); }
+  &.open  { opacity: 0; pointer-events: none; transform: scale(0.85); }
+
+  // Rotating gradient border ring
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 34px;
+    background: conic-gradient(
+      from var(--border-angle),
+      transparent  15%,
+      $yellow-btn  38%,
+      #ffffff      50%,
+      $primary-lt  62%,
+      transparent  85%
+    );
+    animation: borderSpin 3s linear infinite;
+    z-index: -2;
+  }
+
+  // Blue gradient fill — covers center of ::after, leaving only the outer ring visible
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 30px;
+    background: linear-gradient(258deg, $primary 6.3%, $primary-lt 98.4%);
+    z-index: -1;
+  }
 
   .trigger-icon-group {
     position: relative;
     width: 24px;
     height: 22px;
     flex-shrink: 0;
+    z-index: 1;
 
     .trigger-star {
       position: absolute;
@@ -71,6 +116,8 @@ $font:         'Plus Jakarta Sans', sans-serif;
     line-height: 17.561px;
     color: #fff;
     white-space: nowrap;
+    position: relative;
+    z-index: 1;
   }
 }
 
