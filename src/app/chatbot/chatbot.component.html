@@ -96,7 +96,7 @@
                 <!-- Slot list -->
                 @if (msg.slots && msg.slots.length > 0) {
                   <div class="slot-list">
-                    @for (slot of msg.slots; track slot.date) {
+                    @for (slot of (msg.slotsExpanded ? msg.slots : msg.slots!.slice(0, 4)); track slot.date) {
                       <div class="slot-item">
                         <div class="slot-left">
                           <span class="slot-date">{{ slot.date }}</span>
@@ -109,8 +109,8 @@
                       </div>
                     }
                   </div>
-                  @if (msg.showBookButton) {
-                    <button class="book-btn book-btn--secondary">See all 10 slots →</button>
+                  @if (msg.showBookButton && !msg.slotsExpanded) {
+                    <button class="book-btn book-btn--secondary" (click)="expandSlots(msg)">See all 10 slots →</button>
                   }
                 }
 

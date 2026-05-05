@@ -27,6 +27,7 @@ export interface ChatMessage {
   resources?: Resource[];
   expandedResources?: boolean;
   slots?: SlotItem[];
+  slotsExpanded?: boolean;
   parsedPills?: ParsedPill[];
   showBookButton?: boolean;
 }
@@ -163,11 +164,18 @@ export class ChatbotComponent implements AfterViewChecked {
           { icon: 'images/icon-calendar.svg', label: userText }
         ],
         slots: [
-          { date: '05-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 3,  seatsColor: 'orange' },
-          { date: '06-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 19, seatsColor: 'blue'   },
-          { date: '07-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 20, seatsColor: 'green'  },
-          { date: '08-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM', seats: 19, seatsColor: 'blue'   }
+          { date: '05-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM',   seats: 3,  seatsColor: 'orange' },
+          { date: '06-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM',   seats: 19, seatsColor: 'blue'   },
+          { date: '07-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM',   seats: 20, seatsColor: 'green'  },
+          { date: '08-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '7–9 AM',   seats: 19, seatsColor: 'blue'   },
+          { date: '09-05-2026', location: 'Gahanga - Kicukiro (KIC)',  time: '9–11 AM',  seats: 5,  seatsColor: 'orange' },
+          { date: '10-05-2026', location: 'Gahanga - Kicukiro (KIC)',  time: '9–11 AM',  seats: 12, seatsColor: 'blue'   },
+          { date: '11-05-2026', location: 'Nyabugogo - Gasabo (GAS)',  time: '7–9 AM',   seats: 8,  seatsColor: 'orange' },
+          { date: '12-05-2026', location: 'Nyabugogo - Gasabo (GAS)',  time: '1–3 PM',   seats: 20, seatsColor: 'green'  },
+          { date: '13-05-2026', location: 'Kanombe - Rubirizi (GAS)', time: '9–11 AM',  seats: 15, seatsColor: 'blue'   },
+          { date: '14-05-2026', location: 'Gahanga - Kicukiro (KIC)',  time: '7–9 AM',   seats: 2,  seatsColor: 'orange' }
         ],
+        slotsExpanded: false,
         showBookButton: true
       };
     }
@@ -230,6 +238,10 @@ export class ChatbotComponent implements AfterViewChecked {
       type: 'ai',
       text: `Thank you for your question! I can help with:\n\n- 🚗 Driving test slots\n- 📄 Birth certificates\n- ✈️ Visa renewal\n- 🏛️ Land transfers\n- 📋 Application status\n\nCould you share more details?`
     };
+  }
+
+  expandSlots(msg: ChatMessage): void {
+    msg.slotsExpanded = true;
   }
 
   formatText(text: string): string {
