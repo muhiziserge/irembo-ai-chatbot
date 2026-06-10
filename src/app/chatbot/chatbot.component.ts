@@ -1,6 +1,7 @@
-import { Component, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, signal, inject, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from '../theme.service';
 
 export interface Resource {
   label: string;
@@ -48,6 +49,8 @@ type ConversationState =
 })
 export class ChatbotComponent implements AfterViewChecked {
   @ViewChild('chatSection') chatSection!: ElementRef;
+
+  theme = inject(ThemeService);
 
   isOpen = signal(false);
   isTyping = signal(false);

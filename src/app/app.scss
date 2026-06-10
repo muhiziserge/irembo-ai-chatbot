@@ -83,6 +83,12 @@ $font-jakarta: 'Plus Jakarta Sans', sans-serif;
     background: transparent;
     &:hover { background: rgba(0,0,0,0.1); }
   }
+
+  .nav-theme-toggle {
+    padding: 6px 8px;
+    color: #fff;
+    line-height: 0;
+  }
 }
 
 // Hero
@@ -224,5 +230,55 @@ $font-jakarta: 'Plus Jakarta Sans', sans-serif;
     gap: 10px;
     font-size: 13px;
     color: #555;
+  }
+}
+
+// ============================
+// Page-level dark mode
+// ============================
+.page-wrap.dark {
+  background: #111318;
+
+  .site {
+    background: #111318;
+  }
+
+  .hero-search {
+    background: #1e2028;
+
+    .hero-search-icon { color: rgba(255, 255, 255, 0.35); }
+
+    .hero-search-input {
+      color: #e2e5ef;
+      &::placeholder { color: rgba(226, 229, 239, 0.4); }
+    }
+  }
+
+  .content-area {
+    background: #111318;
+
+    .section-title { color: #e2e5ef; }
+  }
+
+  .service-col {
+    .service-col-divider { opacity: 0.15; }
+
+    .service-list li {
+      color: #b8bfd1;
+      &:hover { background: rgba(0, 99, 207, 0.12); }
+      &.service-list__active { color: #e2e5ef; }
+    }
+  }
+
+  .site-footer {
+    background: #0a0c10;
+    border-top-color: rgba(255, 255, 255, 0.08);
+
+    .footer-copy,
+    .footer-links { color: #6b7280; }
+
+    .footer-phone { color: #6aadff; }
+    .footer-follow { color: #6b7280; }
+    .footer-socials { color: #6b7280; }
   }
 }
