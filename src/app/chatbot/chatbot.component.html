@@ -12,7 +12,7 @@
   <div class="chatbot-backdrop" (click)="closeModal()"></div>
 
   <!-- Modal -->
-  <div class="chatbot-modal" [class.dark]="isDarkMode()" role="dialog" aria-label="IremboAI Chatbot" aria-modal="true">
+  <div class="chatbot-modal" [class.dark]="theme.pageIsDark() || isDarkMode()" role="dialog" aria-label="IremboAI Chatbot" aria-modal="true">
 
     <!-- Header -->
     <div class="chatbot-header">
