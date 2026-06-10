@@ -51,6 +51,7 @@ export class ChatbotComponent implements AfterViewChecked {
 
   isOpen = signal(false);
   isTyping = signal(false);
+  isDarkMode = signal(false);
   inputText = '';
   messages = signal<ChatMessage[]>([]);
 
@@ -79,6 +80,10 @@ export class ChatbotComponent implements AfterViewChecked {
 
   closeModal(): void {
     this.isOpen.set(false);
+  }
+
+  toggleDarkMode(): void {
+    this.isDarkMode.update(v => !v);
   }
 
   sendSuggestion(text: string): void {
