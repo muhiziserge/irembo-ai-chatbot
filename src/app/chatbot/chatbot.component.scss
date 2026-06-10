@@ -259,6 +259,26 @@ $font: 'Plus Jakarta Sans', sans-serif;
     white-space: nowrap;
   }
 
+  .theme-toggle-btn {
+    position: absolute;
+    top: 8px;
+    right: 48px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gray-600;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: $gray-100;
+    }
+  }
+
   .close-btn {
     position: absolute;
     top: 8px;
@@ -879,5 +899,158 @@ $font: 'Plus Jakarta Sans', sans-serif;
 
   &:hover {
     background: rgba(0, 197, 207, 0.05);
+  }
+}
+
+// ==========================================
+// Dark mode
+// ==========================================
+.chatbot-modal.dark {
+  background: #16181e;
+
+  .chatbot-header {
+    background: #16181e;
+
+    .theme-toggle-btn {
+      color: #8890a6;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .header-divider {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .chat-section {
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  .user-bubble {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e5ef;
+  }
+
+  .ai-bubble {
+    background: #1e2028;
+    border-color: rgba(255, 255, 255, 0.07);
+  }
+
+  .ai-text {
+    color: #e2e5ef;
+  }
+
+  .welcome-greeting,
+  .welcome-sub {
+    color: #e2e5ef;
+  }
+
+  .welcome-hint {
+    color: #8890a6;
+  }
+
+  .suggestion-pill {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e2e5ef;
+
+    &:hover {
+      background: rgba(0, 99, 207, 0.15);
+      border-color: rgba(0, 99, 207, 0.3);
+    }
+  }
+
+  .reply-chip {
+    background: rgba(0, 99, 207, 0.2);
+    border-color: rgba(0, 99, 207, 0.35);
+
+    &:hover {
+      background: rgba(0, 99, 207, 0.3);
+    }
+  }
+
+  .parsed-pill {
+    background: #1e2028;
+    border-color: rgba(0, 99, 207, 0.45);
+  }
+
+  .slot-item {
+    background: #1e2028;
+    border-color: rgba(255, 255, 255, 0.07);
+
+    .slot-date {
+      color: #e2e5ef;
+    }
+
+    .slot-loc,
+    .slot-time {
+      color: #8890a6;
+    }
+  }
+
+  .book-btn--secondary {
+    background: rgba(0, 99, 207, 0.18);
+    color: #6aadff;
+  }
+
+  .resources-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .resources-header span {
+    color: #8890a6;
+  }
+
+  .resource-link {
+    color: #8890a6;
+
+    &:hover {
+      color: #6aadff;
+    }
+  }
+
+  .typing-dots span {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .input-box {
+    background: #1e2028;
+    border-color: rgba(0, 99, 207, 0.55);
+  }
+
+  .input-textarea {
+    background: #1e2028;
+    color: #e2e5ef;
+
+    &::placeholder {
+      color: rgba(226, 229, 239, 0.4);
+      opacity: 1;
+    }
+  }
+
+  .modal-footer {
+    background: #0f1013;
+  }
+
+  .footer-note {
+    color: #6b7280;
+  }
+
+  .feedback-btn {
+    background: #1e2028;
+    color: #0097e7;
+
+    &:hover {
+      background: rgba(0, 197, 207, 0.08);
+    }
   }
 }
